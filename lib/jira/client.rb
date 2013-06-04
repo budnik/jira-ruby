@@ -62,6 +62,8 @@ module JIRA
         @consumer = @request_client.consumer
       when :basic
         @request_client = HttpClient.new(@options)
+      when :session_cookie
+        @request_client = HttpCookieClient.new(@options)
       end
 
       @options.freeze
