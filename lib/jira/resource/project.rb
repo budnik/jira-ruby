@@ -25,7 +25,7 @@ module JIRA
       end
 
       def team
-        JIRA::Resource::User.find_by_project client, key
+        client.User.find_by_project key
       end
 
     end
