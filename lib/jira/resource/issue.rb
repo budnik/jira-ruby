@@ -48,6 +48,16 @@ module JIRA
         end
       end
 
+      def self.find_by_project(client, key, start_at = 0, max_results = 50)
+        url = client.options[:rest_base_path] + "/search?jql=project='#{key}'&maxResults=#{max_results}&start_at=#{start_at}"
+        response = client.get(url)
+        json = parse_json(response.body)
+        json['issues'].map! do |issue|
+          client.Issue.build(issue)
+        end
+        json
+      end
+
       def respond_to?(method_name)
         if attrs.keys.include?('fields') && attrs['fields'].keys.include?(method_name.to_s)
           true
