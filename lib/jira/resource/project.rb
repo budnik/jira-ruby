@@ -25,7 +25,9 @@ module JIRA
       end
 
       def team
-        client.User.find_by_project key
+        JIRA::Resource::User.find_by_project client, key
+      rescue JIRA::HTTPError
+        []
       end
 
     end
